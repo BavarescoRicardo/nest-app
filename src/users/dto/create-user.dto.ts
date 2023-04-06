@@ -1,6 +1,6 @@
 export class CreateUserDto {
-    id: String;
     name: String;
+    last_name: String;
     hash: String;
     avatar: String;
 }
