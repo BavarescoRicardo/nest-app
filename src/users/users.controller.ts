@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException } 
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { CreateEmailDto } from './dto/create-email-dto';
 
 @Controller('users')
 export class UsersController {
@@ -34,5 +35,10 @@ export class UsersController {
     } catch (error) {
       throw new NotFoundException();
     }
+  }
+
+  @Post('enviar-email')
+  enviarEmail(@Body() req: CreateEmailDto) {
+    return this.usersService.enviarEmail(req);
   }
 }
