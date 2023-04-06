@@ -9,7 +9,7 @@ import { User } from './entities/user.entity';
     MongooseModule.forFeature([{
       name: 'User', schema: User,
     }]),
-    MongooseModule.forRoot('mongodb://localhost/apinest'),
+    MongooseModule.forRoot('mongodb://localhost/apinest')
   ],
   controllers: [UsersController],
   providers: [UsersService]
