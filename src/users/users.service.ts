@@ -54,9 +54,9 @@ export class UsersService {
 
   async remove(id: number) {
     try {
-      await this.userModel.deleteOne({id: id})
+      const removed = await this.userModel.deleteOne({id: id})
       .then(() => {
-        return `The user: ${id} has been removed`;
+        return `The user: ${removed} has been removed`;
     })   
       
     } catch (error) {
