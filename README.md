@@ -36,3 +36,9 @@ $ npm run test:e2e
 
 # test coverage
 $ npm run test:cov
+
+
+
+Executing..
+The routes can be acessed by postman/insomnia
+  there are some rules for validation testing like the new user should have a name with more than 5 letters..
