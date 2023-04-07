@@ -4,8 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { EmailService } from '../email/email.service';
-import { CreateEmailDto } from './dto/create-email-dto';
+import { UserDto } from './dto/user.dto';
 
 @Injectable()
 export class UsersService {
@@ -18,7 +17,7 @@ export class UsersService {
         id: Date.now()
       }
 
-      const result = await new this.userModel(newUser).save();
+      const result: UserDto = await new this.userModel(newUser).save();
       return result;
 
     } catch (error) {
@@ -29,7 +28,8 @@ export class UsersService {
 
   async findAll() {    
     try {
-      return await this.userModel.find();
+      const result:UserDto[] = await this.userModel.find();
+      return result;
       
     } catch (error) {
       throw error;
@@ -38,7 +38,8 @@ export class UsersService {
 
   async findOne(id: number) {
     try {
-      return await this.userModel.findOne({ id: id});
+      const result: UserDto = await this.userModel.findOne({ id: id});
+      return result;
       
     } catch (error) {
       throw error;
@@ -59,7 +60,7 @@ export class UsersService {
     try {
       const removed = await this.userModel.deleteOne({id: id})
       .then(() => {
-        return `The user: ${removed} has been removed`;
+        return { messageResult: `The user: ${removed} has been removed`};
     })   
       
     } catch (error) {

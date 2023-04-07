@@ -7,8 +7,9 @@ export class PermissionGuard implements CanActivate {
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     const request = context.switchToHttp().getRequest();
+    const permission = request.headers.permission;    
+    console.log(permission)
 
-    const permission = request.user.adm;
-    return permission;
+    return permission === "ADMIN";
   }
 }
