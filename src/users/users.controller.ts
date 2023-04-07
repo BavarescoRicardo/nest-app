@@ -2,12 +2,14 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException, V
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { CreateEmailDto } from './dto/create-email-dto';
 import { PermissionGuard } from 'src/permission/permission.guard';
+import { CreateEmailDto } from './dto/create-email-dto';
+import { EmailService } from '../email/email.service';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService,
+              private readonly emailService: EmailService) {}
 
   @Post()
   @UseGuards(PermissionGuard)
@@ -26,8 +28,21 @@ export class UsersController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
+  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    try {
+      const result: UpdateUserDto = await this.usersService.update(+id, updateUserDto);
+
+      const req = {
+        email: "ricardo.bav17@gmail.com",
+        message: "atualizado usuario: " + result.name + " --  envio sucedido "
+      }      
+      
+      this.emailService.enviarEmail(req);
+      
+      return result;
+    } catch (error) {
+      return NotFoundException;
+    }
   }
 
   @Delete(':id')
@@ -37,10 +52,5 @@ export class UsersController {
     } catch (error) {
       throw new NotFoundException();
     }
-  }
-
-  @Post('enviar-email')
-  enviarEmail(@Body() req: CreateEmailDto) {
-    return this.usersService.enviarEmail(req);
   }
 }
