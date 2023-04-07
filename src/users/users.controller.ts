@@ -1,14 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException, ValidationPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException, ValidationPipe, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { CreateEmailDto } from './dto/create-email-dto';
+import { PermissionGuard } from 'src/permission/permission.guard';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
+  @UseGuards(PermissionGuard)
   create(@Body(new ValidationPipe) createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
