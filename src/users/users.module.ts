@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { User } from './entities/user.entity';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
+require('dotenv/config');
 
 @Module({
   imports: [        
@@ -13,9 +14,9 @@ import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
     }]),
     MongooseModule.forRoot('mongodb://localhost/apinest'),
     MailerModule.forRoot({
-      transport: 'smtps://ricardo.bav17@gmail.com:dgFaV0p27Oy1wDIB@smtp-relay.sendinblue.com',
+      transport: `smtps://${process.env.EMAIL}:${process.env.PASS}@smtp-relay.sendinblue.com` ,
       defaults: {
-        from: '"nest-modules" <nest.ricardo.task@gmail.com>',
+        from: `"nest-modules" <${process.env.FROM_EMAIL}>`,
       },
       template: {
         dir: __dirname + '/templates',
