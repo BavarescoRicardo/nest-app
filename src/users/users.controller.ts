@@ -4,11 +4,14 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PermissionGuard } from 'src/permission/permission.guard';
 import { EmailService } from '../email/email.service';
+import { MessageBrokerService } from 'src/message-broker/message-broker.service';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService,
-              private readonly emailService: EmailService) {}
+              private readonly emailService: EmailService,
+              private readonly messageBrokerService: MessageBrokerService
+              ) {}
 
   @Post()
   @UseGuards(PermissionGuard)
@@ -23,6 +26,7 @@ export class UsersController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
+    this.messageBrokerService.sendMessage(+id);
     return this.usersService.findOne(+id);
   }
 

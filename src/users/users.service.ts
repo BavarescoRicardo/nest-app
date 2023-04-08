@@ -1,16 +1,18 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UserDto } from './dto/user.dto';
-import { ClientProxy, RmqRecordBuilder } from "@nestjs/microservices";
+import { MessageBrokerService } from 'src/message-broker/message-broker.service';
+
 
 @Injectable()
 export class UsersService {
   constructor(@InjectModel('User') private readonly userModel: Model<User>,
-    @Inject('SUBSCRIBERS_SERVICE') private menssageService: ClientProxy) {}
+  //private messageBrokerService: MessageBrokerService
+  ) {}
   
   async create(createUserDto: CreateUserDto) {
     try {
@@ -40,18 +42,6 @@ export class UsersService {
 
   async findOne(id: number) {
     try {
-      const message = "Foi criado o usuario: "+id;
-      const record = new RmqRecordBuilder(message)
-        .setOptions({
-          headers: {
-            ['x-version']: '1.0.0',
-          },
-          priority: 3,
-        })
-        .build();
-      this.menssageService.send(message, record).subscribe();
-
-
       const result: UserDto = await this.userModel.findOne({ id: id});
       return result;
       
