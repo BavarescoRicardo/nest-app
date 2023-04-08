@@ -3,7 +3,6 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PermissionGuard } from 'src/permission/permission.guard';
-import { CreateEmailDto } from './dto/create-email-dto';
 import { EmailService } from '../email/email.service';
 
 @Controller('users')
