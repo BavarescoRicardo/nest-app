@@ -7,7 +7,7 @@ require('dotenv/config');
 @Module({
   imports: [    
     MailerModule.forRoot({
-    transport: `smtps://${process.env.EMAIL}:${process.env.PASS}@smtp-relay.sendinblue.com` ,
+    transport: `smtps://${process.env.EMAIL_HOST}:${process.env.EMAIL_PASS}@smtp-relay.sendinblue.com` ,
     defaults: {
       from: `"nest-modules" <${process.env.FROM_EMAIL}>`,
     },
