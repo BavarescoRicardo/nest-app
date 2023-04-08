@@ -5,7 +5,7 @@ import { UsersModule } from './users/users.module';
 import { MessageBrokerModule } from './message-broker/message-broker.module';
 
 @Module({
-  imports: [UsersModule, MessageBrokerModule],
+  imports: [UsersModule],
   controllers: [AppController],
   providers: [AppService],
 })
