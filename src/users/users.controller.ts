@@ -5,6 +5,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { PermissionGuard } from 'src/permission/permission.guard';
 import { EmailService } from '../email/email.service';
 import { MessageBrokerService } from 'src/message-broker/message-broker.service';
+require('dotenv/config');
 
 @Controller('users')
 export class UsersController {
@@ -26,8 +27,14 @@ export class UsersController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    this.messageBrokerService.sendMessage(+id);
-    return this.usersService.findOne(+id);
+    try {
+      // Condition for platform
+      if (process.env.RABBITMQ === 'INSTALLED')
+        this.messageBrokerService.sendMessage(+id);
+      return this.usersService.findOne(+id);
+    } catch (error) {
+      console.log(error)  
+    }
   }
 
   @Patch(':id')
