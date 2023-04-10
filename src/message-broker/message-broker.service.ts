@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { ClientProxy, ClientProxyFactory, RmqRecordBuilder, Transport } from "@nestjs/microservices";
-import { catchError, of } from 'rxjs';
+import { catchError, map } from 'rxjs';
 require('dotenv/config');
 
 @Injectable()
@@ -33,9 +33,16 @@ export class MessageBrokerService {
                 priority: 3,
               })
               .build();
-              this.client.send(message, record)
-              
-              .forEach(catchError(val => of({ error: val.message })))
+
+              this.client.send(record, message)
+              .pipe(
+                map(res => {
+                  return res?.data;
+                }),
+                catchError(e => {
+                  throw new HttpException("Could not send message by Rabbit", HttpStatus.BAD_GATEWAY);
+                }),
+              );
         } catch (error) {
           throw new Error("Failed to send message");
         }
