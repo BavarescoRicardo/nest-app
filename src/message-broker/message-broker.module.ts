@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ClientProxyFactory, Transport } from '@nestjs/microservices';
 import { MessageBrokerService } from './message-broker.service';
-
+/*
 const providerFactory = 
 {
   provide: 'M_SERVICE',
@@ -10,7 +10,8 @@ const providerFactory =
     const PASS="StrongPassword"
     const HOST="localhost:5672/tasks"
     const QUEUENAME="tasks"
-    return ClientProxyFactory.create({
+    return 
+    ClientProxyFactory.create({
       transport: Transport.RMQ,
       options: {
         urls: [`amqp://${USER}:${PASS}@${HOST}`],
@@ -22,9 +23,9 @@ const providerFactory =
     })
   }
 }
-
+*/
 @Module({
-  providers: [ providerFactory, MessageBrokerService],
+  providers: [ MessageBrokerService],
   exports: [MessageBrokerService]
 })
 
