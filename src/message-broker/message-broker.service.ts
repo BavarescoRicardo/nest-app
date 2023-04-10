@@ -1,12 +1,10 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ClientProxy, ClientProxyFactory, RmqRecordBuilder, Transport } from "@nestjs/microservices";
 import { catchError, of } from 'rxjs';
+require('dotenv/config');
 
 @Injectable()
 export class MessageBrokerService {
-  private USER="admin"
-  private PASS="StrongPassword"
-  private HOST="localhost:5672/tasks"
   private QUEUENAME="tasks"
   private client: ClientProxy;
 
@@ -15,8 +13,8 @@ export class MessageBrokerService {
     ClientProxyFactory.create({
       transport: Transport.RMQ,
       options: {
-        urls: [`amqp://${"admin"}:${"StrongPassword"}@${"localhost:5672/tasks"}`],
-        queue: "tasks",
+        urls: [`amqp://${process.env.RABBIT_USER}:${process.env.RABBIT_PASS}@${process.env.RABBIT_HOST}`],
+        queue: this.QUEUENAME,
         queueOptions: {
           durable: true,
         }
