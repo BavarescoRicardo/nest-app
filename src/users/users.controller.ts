@@ -26,14 +26,14 @@ export class UsersController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
     try {
       // Condition for platform
-      if (process.env.RABBITMQ === 'INSTALLED')
-        this.messageBrokerService.sendMessage(+id);
+     // if (process.env.RABBITMQ === 'INSTALLED')
+      await this.messageBrokerService.sendMessage(+id);
       return this.usersService.findOne(+id);
     } catch (error) {
-      console.log(error)  
+      throw new Error("Could not use message broker, find user");
     }
   }
 
