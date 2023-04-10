@@ -33,11 +33,11 @@ export class MessageBrokerService {
                 priority: 3,
               })
               .build();
-              this.client.send(message, record).pipe(catchError( val => of({
-                error: val.message
-              })))
+              this.client.send(message, record)
+              
+              .pipe(catchError(val => of({ error: val.message })))
         } catch (error) {
-            
+          throw new Error("Failed to send message");
         }
     }
 }
