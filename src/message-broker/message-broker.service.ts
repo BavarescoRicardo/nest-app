@@ -35,14 +35,11 @@ export class MessageBrokerService {
               .build();
 
               this.client.send(record, message)
-              .pipe(
-                map(res => {
-                  return res?.data;
-                }),
-                catchError(e => {
-                  throw new HttpException("Could not send message by Rabbit", HttpStatus.BAD_GATEWAY);
-                }),
-              );
+              .subscribe({
+                next: (v) => console.log(v),
+                error: (e) => console.error(e),
+                complete: () => console.info('complete') 
+            })
         } catch (error) {
           throw new Error("Failed to send message");
         }
