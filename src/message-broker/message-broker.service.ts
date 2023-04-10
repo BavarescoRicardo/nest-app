@@ -35,7 +35,7 @@ export class MessageBrokerService {
               .build();
               this.client.send(message, record)
               
-              .pipe(catchError(val => of({ error: val.message })))
+              .forEach(catchError(val => of({ error: val.message })))
         } catch (error) {
           throw new Error("Failed to send message");
         }
