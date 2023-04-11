@@ -22,9 +22,9 @@ export class MessageBrokerService {
     })
     }
 
-    async sendMessage(name: String) {
+    async sendMessage(email: String) {
         try {
-            const message = "Foi criado o usuario: "+ name;
+            const message = "Foi criado o usuario: "+ email;
             const record = new RmqRecordBuilder(message)
               .setOptions({
                 headers: {

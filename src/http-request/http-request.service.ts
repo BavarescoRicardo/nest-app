@@ -7,9 +7,7 @@ export class HttpRequestService {
     constructor(private readonly httpService: HttpService) {}
 
     async getUserById(id: number): Promise<any> {
-            return this.httpService.get(`https://reqres.in/api/users/${id}`).pipe(
-                map(response => response.data.data)
-              );             
+            return (await this.httpService.axiosRef.get(`https://reqres.in/api/users/${id}`)).data.data;
     }
     
     async getUserAvatarById(id: number): Promise<any> {

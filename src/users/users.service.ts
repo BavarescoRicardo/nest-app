@@ -7,6 +7,7 @@ import { UserDto } from './dto/user.dto';
 import { HttpRequestService } from '../http-request/http-request.service';
 import { EmailService } from 'src/email/email.service';
 import { CreateEmailDto } from './dto/create-email-dto';
+import { stringify } from 'querystring';
 
 @Injectable()
 export class UsersService {
@@ -45,14 +46,18 @@ export class UsersService {
   }
 
   async findAvatar(id: number) {
-    try {
-        const user = await this.httpRequest.getUserById(id);
-        const newUser = JSON.parse(user);
+     try {
+      let user;      
+      if((await this.userModel.find({id: id})).length > 0){
+        return await this.userModel.find({id: id});
+      }else {
+        user = await this.httpRequest.getUserById(id);
+        const newUser = new this.userModel(user).save();
+        // const newUser = JSON.parse(user);
+        return user;
+      }
+      return user;
 
-        new this.userModel(newUser).save()
-        return newUser;
-      //}
-       // return user;           
     } catch (error) {
       throw error;
     }
