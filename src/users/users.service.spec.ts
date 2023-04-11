@@ -9,7 +9,6 @@ import { EmailModule } from '../email/email.module';
 describe('UsersService', () => {
   let service: UsersService;
   const user = {
-    "id": 1,
     "email": "george.bluth@reqres.in",
     "first_name": "George",
     "last_name": "Bluth",
@@ -40,7 +39,15 @@ describe('UsersService', () => {
     expect(service.findOne(1)).toBeCalled;
   })
 
-  it('should get an user avatar', () =>{
-    expect(service.create).toBeDefined;
+  it('should create and return an user', async () =>{
+    expect(await service.create(user)).toBe({
+      __v: 0,
+      _id: expect.any(String),
+      email: user.email,
+      first_name: user.first_name,
+      id: expect.any(Number),
+      last_name: user.last_name,
+      avatar: user.avatar
+    });
   })
 });
