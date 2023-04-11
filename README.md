@@ -1,44 +1,35 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+Nest API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+The Nest API is a nest js project. It is designed to respond request calls covering all the tasks. 
 
 
-## Installation
+# To Install
 
 ```bash
 $ npm install
 ```
 
-## Running the app
+# To run the app
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
 $ npm run start:dev
-
-# production mode
-$ npm run start:prod
 ```
 
-## Test
+# Test
 
 ```bash
 # unit tests
 $ npm run test
+```
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-
-
-
-Executing..
+# Executing
 The routes can be acessed by postman/insomnia
   there are some rules for validation testing like the new user should have a name with more than 5 letters..
+
+* POST /api/users
+
+* GET localhost:3000/users/{id}
+
+* GET localhost:3000/users/{id}/avatar
+
+* DELETE /api/user/{userId}/avatar

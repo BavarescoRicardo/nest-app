@@ -1,13 +1,12 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException, ValidationPipe, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { PermissionGuard } from '../permission/permission.guard';
 import { EmailService } from '../email/email.service';
 import { MessageBrokerService } from '../message-broker/message-broker.service';
 require('dotenv/config');
 
-@Controller('users')
+@Controller('api/user')
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,
@@ -17,40 +16,17 @@ export class UsersController {
 
   @Post()
   @UseGuards(PermissionGuard)
-  create(@Body(new ValidationPipe) createUserDto: CreateUserDto) {
+  async create(@Body(new ValidationPipe) createUserDto: CreateUserDto) {
+    await this.messageBrokerService.sendMessage(createUserDto.name);
     return this.usersService.create(createUserDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.usersService.findAll();
   }
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    try {
-      await this.messageBrokerService.sendMessage(+id);
+    try {      
       return this.usersService.findOne(+id);
     } catch (error) {
       throw new Error("Could not use message broker, find user");
-    }
-  }
-
-  @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    try {
-      const result: UpdateUserDto = await this.usersService.update(+id, updateUserDto);
-
-      const req = {
-        email: "ricardo.bav17@gmail.com",
-        message: "atualizado usuario: " + result.name + " --  envio sucedido "
-      }      
-      
-      this.emailService.enviarEmail(req);
-      
-      return result;
-    } catch (error) {
-      return NotFoundException;
     }
   }
 

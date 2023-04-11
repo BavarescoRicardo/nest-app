@@ -31,15 +31,11 @@ describe('UsersService', () => {
     expect(service).toBeDefined();
   });
 
-  it('should get all users', () =>{
-    expect(service.findAll).toBeCalled;
-  })
-
-  it('should get an use', () =>{
+  it('should get an user', () =>{
     expect(service.findOne(1)).toBeCalled;
   })
 
-  it('should get an use', () =>{
+  it('should get an user avatar', () =>{
     expect(service.findAvatar(1)).toBeDefined;
   })
 });
