@@ -29,8 +29,6 @@ export class UsersController {
   @Get(':id')
   async findOne(@Param('id') id: string) {
     try {
-      // Condition for platform
-     // if (process.env.RABBITMQ === 'INSTALLED')
       await this.messageBrokerService.sendMessage(+id);
       return this.usersService.findOne(+id);
     } catch (error) {
@@ -62,6 +60,15 @@ export class UsersController {
       return this.usersService.remove(+id);
     } catch (error) {
       throw new NotFoundException();
+    }
+  }
+
+  @Get(':id/avatar')
+  async findAvatar(@Param('id') id: string) {
+    try {
+      return this.usersService.findAvatar(+id);
+    } catch (error) {
+      throw new Error("Could not use message broker, find user");
     }
   }
 }

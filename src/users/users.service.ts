@@ -50,6 +50,17 @@ export class UsersService {
     }
   }
 
+  async findAvatar(id: number) {
+    try {
+
+      const result = await this.httpRequest.getUserAvatarById(id);
+      return result;
+      
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async update(id: number, updateUserDto: UpdateUserDto) : Promise<UpdateUserDto>{
     try {
       const user = await this.userModel.findOne({ id: id});

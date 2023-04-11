@@ -18,14 +18,8 @@ export class HttpRequestService {
               );             
     }
     
-    async getUserAvatarById(id): Promise<any> {
-      var user;
-      var avatar;
-      user = await this.httpService.get(`https://reqres.in/api/users/${id.id}`).pipe(
-        map(response => response.data.data.avatar)
-       );
-
-      avatar = await this.httpService.get(`https://reqres.in/api/users/${id.id}`).pipe(
+    async getUserAvatarById(id: number): Promise<any> {
+      const avatar = await this.httpService.get(`https://reqres.in/api/users/${id}`).pipe(
             map(response => response.data.data.avatar)
         );
       return avatar;
