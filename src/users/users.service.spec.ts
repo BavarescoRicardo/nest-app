@@ -6,6 +6,13 @@ import { HttpRequestModule } from '../http-request/http-request.module';
 
 describe('UsersService', () => {
   let service: UsersService;
+  const user = {
+    "id": 1,
+    "email": "george.bluth@reqres.in",
+    "first_name": "George",
+    "last_name": "Bluth",
+    "avatar": "https://reqres.in/img/faces/1-image.jpg"
+  }
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -23,4 +30,16 @@ describe('UsersService', () => {
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
+
+  it('should get all users', () =>{
+    expect(service.findAll).toBeCalled;
+  })
+
+  it('should get an use', () =>{
+    expect(service.findOne(1)).toBeCalled;
+  })
+
+  it('should get an use', () =>{
+    expect(service.findAvatar(1)).toBeDefined;
+  })
 });
