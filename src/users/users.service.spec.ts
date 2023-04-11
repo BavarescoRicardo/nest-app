@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UsersService } from './users.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User } from './entities/user.entity';
+import { HttpRequestModule } from '../http-request/http-request.module';
 
 describe('UsersService', () => {
   let service: UsersService;
@@ -12,7 +13,7 @@ describe('UsersService', () => {
         MongooseModule.forFeature([{
         name: 'User', schema: User,
       }]),
-      MongooseModule.forRoot('mongodb://localhost/apinest')],
+      MongooseModule.forRoot('mongodb://localhost/apinest'), HttpRequestModule],
       providers: [UsersService],
     }).compile();
 
