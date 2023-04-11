@@ -3,8 +3,8 @@ import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User } from './entities/user.entity';
-import { EmailModule } from 'src/email/email.module';
-import { MessageBrokerModule } from 'src/message-broker/message-broker.module';
+import { EmailModule } from '../email/email.module';
+import { MessageBrokerModule } from '../message-broker/message-broker.module';
 
 @Module({
   imports: [      

@@ -2,9 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException, V
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { PermissionGuard } from 'src/permission/permission.guard';
+import { PermissionGuard } from '../permission/permission.guard';
 import { EmailService } from '../email/email.service';
-import { MessageBrokerService } from 'src/message-broker/message-broker.service';
+import { MessageBrokerService } from '../message-broker/message-broker.service';
 require('dotenv/config');
 
 @Controller('users')
