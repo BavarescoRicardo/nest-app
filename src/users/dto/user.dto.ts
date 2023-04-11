@@ -1,6 +1,6 @@
 
 export class UserDto {
-    name: String;
+    email: String;
     last_name: String;
     hash: String;
     avatar: String;

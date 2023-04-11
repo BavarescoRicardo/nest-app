@@ -50,12 +50,16 @@ export class UsersService {
       user = await this.userModel.findOne({ id: id});
       
       if(!user){
-        user = await this.httpRequest.getUserAvatarById(id);
+        user = await this.httpRequest.getUserById(id);
         
-        const result: UserDto = await new this.userModel(user).save();
-        return result;
+        await new this.userModel(user).save()
+        .then(res => {
+          console.log("Resposta then save user.. ")
+          console.log(res)
+          //user = res;
+        })
       }
-      return user.avatar;           
+      return user;           
     } catch (error) {
       throw error;
     }

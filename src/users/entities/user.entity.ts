@@ -2,7 +2,8 @@ import * as mongoose from 'mongoose';
 
 export const User = new mongoose.Schema({
     id: Number,
-    name: String,
+    email: String,
+    first_name: String,
     last_name: String,
     hash: String,
     avatar: String,
@@ -10,7 +11,8 @@ export const User = new mongoose.Schema({
 
 export interface User {
     id: Number,
-    name: String,
+    email: String,
+    first_name: String,
     last_name: String,
     hash: String,
     avatar: String,

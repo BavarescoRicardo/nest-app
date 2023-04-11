@@ -6,12 +6,6 @@ import { map } from 'rxjs';
 export class HttpRequestService {
     constructor(private readonly httpService: HttpService) {}
 
-    async getUsers(): Promise<any> {
-        return this.httpService.get('https://reqres.in/api/users/').pipe(
-            map(response => response.data.data)
-          );            
-    }
-
     async getUserById(id): Promise<any> {
             return this.httpService.get(`https://reqres.in/api/users/${id}`).pipe(
                 map(response => response.data.data)
@@ -20,7 +14,7 @@ export class HttpRequestService {
     
     async getUserAvatarById(id: number): Promise<any> {
       const user = await this.httpService.get(`https://reqres.in/api/users/${id}`).pipe(
-            map(response => response.data.data)
+            map(response => response.data.data.avatar)
         );
       return user;
     }
