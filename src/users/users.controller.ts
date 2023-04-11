@@ -9,10 +9,11 @@ require('dotenv/config');
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService,
-              private readonly emailService: EmailService,
-              private readonly messageBrokerService: MessageBrokerService
-              ) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly emailService: EmailService,
+    private readonly messageBrokerService: MessageBrokerService
+  ) {}
 
   @Post()
   @UseGuards(PermissionGuard)

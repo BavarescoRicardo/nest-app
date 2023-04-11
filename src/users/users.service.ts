@@ -5,11 +5,12 @@ import { User } from './entities/user.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UserDto } from './dto/user.dto';
+import { HttpRequestService } from 'src/http-request/http-request.service';
 
 @Injectable()
 export class UsersService {
   constructor(@InjectModel('User') private readonly userModel: Model<User>,
-  //private messageBrokerService: MessageBrokerService
+  private readonly httpRequest: HttpRequestService
   ) {}
   
   async create(createUserDto: CreateUserDto) {
@@ -40,7 +41,8 @@ export class UsersService {
 
   async findOne(id: number) {
     try {
-      const result: UserDto = await this.userModel.findOne({ id: id});
+
+      const result = await this.httpRequest.getUserById(id);
       return result;
       
     } catch (error) {

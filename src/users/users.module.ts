@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { User } from './entities/user.entity';
 import { EmailModule } from '../email/email.module';
 import { MessageBrokerModule } from '../message-broker/message-broker.module';
+import { HttpRequestModule } from 'src/http-request/http-request.module';
 
 @Module({
   imports: [      
@@ -12,7 +13,7 @@ import { MessageBrokerModule } from '../message-broker/message-broker.module';
       name: 'User', schema: User,
     }]),
     MongooseModule.forRoot('mongodb://localhost/apinest'),
-    EmailModule, MessageBrokerModule
+    EmailModule, MessageBrokerModule, HttpRequestModule
 ],
   controllers: [UsersController],
   providers: [UsersService],
