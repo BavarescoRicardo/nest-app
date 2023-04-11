@@ -24,7 +24,11 @@ $ npm run test
 
 # Executing
 The routes can be acessed by postman/insomnia
-  there are some rules for validation testing like the new user should have a name with more than 5 letters..
+  there are some rules for validation testing like the new user should have a email with more than 5 letters..
+
+  The microservices
+    send email / send message have the users and passwords in the .env file
+    The RabbitMQ uses the local machine service
 
 * POST /api/users
 
