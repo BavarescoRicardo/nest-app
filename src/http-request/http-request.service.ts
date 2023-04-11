@@ -6,7 +6,7 @@ import { map } from 'rxjs';
 export class HttpRequestService {
     constructor(private readonly httpService: HttpService) {}
 
-    async getUserById(id): Promise<any> {
+    async getUserById(id: number): Promise<any> {
             return this.httpService.get(`https://reqres.in/api/users/${id}`).pipe(
                 map(response => response.data.data)
               );             

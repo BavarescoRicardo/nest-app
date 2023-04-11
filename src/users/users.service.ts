@@ -46,20 +46,13 @@ export class UsersService {
 
   async findAvatar(id: number) {
     try {
-      var user: UserDto;
-      user = await this.userModel.findOne({ id: id});
-      
-      if(!user){
-        user = await this.httpRequest.getUserById(id);
-        
-        await new this.userModel(user).save()
-        .then(res => {
-          console.log("Resposta then save user.. ")
-          console.log(res)
-          //user = res;
-        })
-      }
-      return user;           
+        const user = await this.httpRequest.getUserById(id);
+        const newUser = JSON.parse(user);
+
+        new this.userModel(newUser).save()
+        return newUser;
+      //}
+       // return user;           
     } catch (error) {
       throw error;
     }
@@ -76,9 +69,5 @@ export class UsersService {
     } catch (error) {
       throw new Error("Could not remove the requested user");
     }  
-  }
-
-  async findAll() {
-    return await this.userModel.find();
   }
 }

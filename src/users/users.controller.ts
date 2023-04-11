@@ -13,7 +13,7 @@ export class UsersController {
 
   @Post()
   async create(@Body(new ValidationPipe) createUserDto: CreateUserDto) {
-    await this.messageBrokerService.sendMessage(createUserDto.email);
+    //await this.messageBrokerService.sendMessage(createUserDto.email);
     return this.usersService.create(createUserDto);
   }
 
@@ -39,15 +39,6 @@ export class UsersController {
   async findAvatar(@Param('id') id: string) {
     try {
       return await this.usersService.findAvatar(+id);
-    } catch (error) {
-      throw new Error("Could not use message broker, find user");
-    }
-  }
-
-  @Get()
-  async findAll() {
-    try {
-      return this.usersService.findAll();
     } catch (error) {
       throw new Error("Could not use message broker, find user");
     }

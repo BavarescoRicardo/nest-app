@@ -5,7 +5,6 @@ export const User = new mongoose.Schema({
     email: String,
     first_name: String,
     last_name: String,
-    hash: String,
     avatar: String,
 })
 
@@ -14,6 +13,5 @@ export interface User {
     email: String,
     first_name: String,
     last_name: String,
-    hash: String,
     avatar: String,
   }
