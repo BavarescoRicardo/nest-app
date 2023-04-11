@@ -5,11 +5,14 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UserDto } from './dto/user.dto';
 import { HttpRequestService } from '../http-request/http-request.service';
+import { EmailService } from 'src/email/email.service';
+import { CreateEmailDto } from './dto/create-email-dto';
 
 @Injectable()
 export class UsersService {
   constructor(@InjectModel('User') private readonly userModel: Model<User>,
-  private readonly httpRequest: HttpRequestService
+  private readonly httpRequest: HttpRequestService,
+  private readonly emailService: EmailService,
   ) {}
   
   async create(createUserDto: CreateUserDto) {
@@ -18,7 +21,9 @@ export class UsersService {
         ...createUserDto,
         id: Date.now()
       }
-
+      
+      const email: CreateEmailDto = {email: 'ricardo.bav17@gmail.com', message: 'user: '+ createUserDto.email + ' created.'};
+      this.emailService.sendEmail(email);
       const result: UserDto = await new this.userModel(newUser).save();
       return result;
 
@@ -46,9 +51,11 @@ export class UsersService {
       
       if(!user){
         user = await this.httpRequest.getUserAvatarById(id);
-        await new this.userModel(user).save();
+        
+        const result: UserDto = await new this.userModel(user).save();
+        return result;
       }
-      return user;           
+      return user.avatar;           
     } catch (error) {
       throw error;
     }
@@ -56,13 +63,18 @@ export class UsersService {
 
   async remove(id: number) {
     try {
+      console.log("Tryn to remover id. "+id)
       const removed = await this.userModel.deleteOne({id: id})
       .then(() => {
-        return { messageResult: `The user: ${removed} has been removed`};
+        return { messageResult: `The user: ${id} has been removed`};
     })   
       
     } catch (error) {
-      throw error;
+      throw new Error("Could not remove the requested user");
     }  
+  }
+
+  async findAll() {
+    return await this.userModel.find();
   }
 }

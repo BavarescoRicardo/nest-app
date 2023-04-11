@@ -7,7 +7,7 @@ export class EmailService {
     constructor(private mailerService: MailerService) {}
   
 
-    async enviarEmail(req: CreateEmailDto) {
+    async sendEmail(req: CreateEmailDto) {
         await this.mailerService.sendMail({
           to: req.email,
           from: 'ricardo.bav17@gmail.com',

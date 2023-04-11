@@ -12,7 +12,7 @@ import { HttpRequestModule } from 'src/http-request/http-request.module';
     MongooseModule.forFeature([{
       name: 'User', schema: User,
     }]),
-    MongooseModule.forRoot('mongodb://localhost/apinest'),
+    MongooseModule.forRoot('mongodb://localhost/appnest'),
     EmailModule, MessageBrokerModule, HttpRequestModule
 ],
   controllers: [UsersController],
