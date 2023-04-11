@@ -19,9 +19,9 @@ export class HttpRequestService {
     }
     
     async getUserAvatarById(id: number): Promise<any> {
-      const avatar = await this.httpService.get(`https://reqres.in/api/users/${id}`).pipe(
-            map(response => response.data.data.avatar)
+      const user = await this.httpService.get(`https://reqres.in/api/users/${id}`).pipe(
+            map(response => response.data.data)
         );
-      return avatar;
+      return user;
     }
 }

@@ -52,10 +52,14 @@ export class UsersService {
 
   async findAvatar(id: number) {
     try {
-
-      const result = await this.httpRequest.getUserAvatarById(id);
-      return result;
+      var user: UserDto;
+      user = await this.userModel.findOne({ id: id});
       
+      if(!user){
+        user = await this.httpRequest.getUserAvatarById(id);
+        await new this.userModel(user).save();
+      }
+      return user;           
     } catch (error) {
       throw error;
     }
