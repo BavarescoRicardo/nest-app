@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
 import { Avatar } from './entities/avatar.entity';
@@ -58,10 +58,8 @@ export class UsersService {
           id: user.id,
           avatar: user.avatar,
         }
-        console.log(user)
-        const newUser = new this.avatarModel(newAvatar).save();
         
-        return newUser;
+        return new this.avatarModel(newAvatar).save();         
       }
 
     } catch (error) {
@@ -73,10 +71,10 @@ export class UsersService {
     try {
         let avatar = await this.avatarModel.find({id: id});
         if(avatar.length > 0){
-          const removed = await this.avatarModel.deleteOne({id: id});      
+          await this.avatarModel.deleteOne({id: id});      
           return { messageResult: `The user: ${id} has been removed`};
         }else{
-          throw new Error("Could not find the requested user");
+          throw new NotFoundException;
         }
       
     } catch (error) {
