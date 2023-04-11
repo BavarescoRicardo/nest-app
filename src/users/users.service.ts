@@ -49,14 +49,13 @@ export class UsersService {
      try {
       let user = await this.userModel.find({id: id});
       if(user.length > 0){
-        return user;
+        return user[0].avatar;
       }else {
         user = await this.httpRequest.getUserById(id);
         const newUser = new this.userModel(user).save();
-        // const newUser = JSON.parse(user);
-        return newUser;
+        
+        return (await newUser).avatar;
       }
-      return user;
 
     } catch (error) {
       throw error;
