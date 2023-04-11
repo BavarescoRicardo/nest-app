@@ -41,7 +41,7 @@ describe('UsersService', () => {
   it('should get an user', async () =>{
     expect(await service.findOne(1)).toBeDefined;
   })
-/*
+
   it('should create and return an user', async () =>{
     expect(await service.create(user)).toBe({
       __v: 0,
@@ -53,5 +53,5 @@ describe('UsersService', () => {
       avatar: user.avatar
     });
   })
-  */
+  
 });
