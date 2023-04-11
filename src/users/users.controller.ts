@@ -4,20 +4,20 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { MessageBrokerService } from '../message-broker/message-broker.service';
 require('dotenv/config');
 
-@Controller('api/user')
+@Controller('api')
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,    
     private readonly messageBrokerService: MessageBrokerService
   ) {}
 
-  @Post()
+  @Post('users')
   async create(@Body(new ValidationPipe) createUserDto: CreateUserDto) {
     await this.messageBrokerService.sendMessage(createUserDto.email);
     return this.usersService.create(createUserDto);
   }
 
-  @Get(':id')
+  @Get('user/:id')
   async findOne(@Param('id') id: string) {
     try {      
       return this.usersService.findOne(+id);
@@ -26,7 +26,7 @@ export class UsersController {
     }
   }
 
-  @Delete(':id/avatar')
+  @Delete('user/:id/avatar')
   async remove(@Param('id') id: string) {
     try {
       return await this.usersService.remove(+id);
@@ -35,7 +35,7 @@ export class UsersController {
     }
   }
 
-  @Get(':id/avatar')
+  @Get('user/:id/avatar')
   async findAvatar(@Param('id') id: string) {
     try {
       return await this.usersService.findAvatar(+id);
