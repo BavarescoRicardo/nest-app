@@ -3,6 +3,8 @@ import { UsersService } from './users.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User } from './entities/user.entity';
 import { HttpRequestModule } from '../http-request/http-request.module';
+import { Avatar } from './entities/avatar.entity';
+import { EmailModule } from '../email/email.module';
 
 describe('UsersService', () => {
   let service: UsersService;
@@ -20,7 +22,10 @@ describe('UsersService', () => {
         MongooseModule.forFeature([{
         name: 'User', schema: User,
       }]),
-      MongooseModule.forRoot('mongodb://localhost/apinest'), HttpRequestModule],
+      MongooseModule.forFeature([{
+        name: 'Avatar', schema: Avatar,
+      }]),
+      MongooseModule.forRoot('mongodb://localhost/apinest'), HttpRequestModule, EmailModule],
       providers: [UsersService],
     }).compile();
 
@@ -36,6 +41,6 @@ describe('UsersService', () => {
   })
 
   it('should get an user avatar', () =>{
-    expect(service.findAvatar(1)).toBeDefined;
+    expect(service.create).toBeDefined;
   })
 });

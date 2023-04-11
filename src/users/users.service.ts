@@ -6,7 +6,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UserDto } from './dto/user.dto';
 import { HttpRequestService } from '../http-request/http-request.service';
-import { EmailService } from 'src/email/email.service';
+import { EmailService } from '../email/email.service';
 import { CreateEmailDto } from './dto/create-email-dto';
 
 @Injectable()
