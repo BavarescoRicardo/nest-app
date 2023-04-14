@@ -2,18 +2,24 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException, V
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { MessageBrokerService } from '../message-broker/message-broker.service';
+import { EmailService } from '../email/email.service';
 import { CreateAvatarDto } from './dto/create-avatar.dto';
+import { CreateEmailDto } from './dto/create-email-dto';
 require('dotenv/config');
 
 @Controller('api')
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,    
-    private readonly messageBrokerService: MessageBrokerService
+    private readonly messageBrokerService: MessageBrokerService,
+    private readonly emailService: EmailService,
   ) {}
 
   @Post('users')
   async create(@Body(new ValidationPipe) createUserDto: CreateUserDto) {
+    const email: CreateEmailDto = {email: 'ricardo.bav17@gmail.com', message: 'user: '+ createUserDto.email + ' created.'};
+    this.emailService.sendEmail(email);
+
     await this.messageBrokerService.sendMessage(createUserDto.email);
     return this.usersService.create(createUserDto);
   }

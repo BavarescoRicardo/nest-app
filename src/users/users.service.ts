@@ -6,7 +6,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UserDto } from './dto/user.dto';
 import { HttpRequestService } from '../http-request/http-request.service';
-import { EmailService } from '../email/email.service';
 import { CreateEmailDto } from './dto/create-email-dto';
 import { CreateAvatarDto } from './dto/create-avatar.dto';
 
@@ -16,7 +15,7 @@ export class UsersService {
     @InjectModel('User') private readonly userModel: Model<User>,
     @InjectModel('Avatar') private readonly avatarModel: Model<Avatar>,
     private readonly httpRequest: HttpRequestService,
-    private readonly emailService: EmailService,
+    
   ) {}
   
   async create(createUserDto: CreateUserDto) {
@@ -25,9 +24,7 @@ export class UsersService {
         ...createUserDto,
         id: Date.now()
       }
-      
-      const email: CreateEmailDto = {email: 'ricardo.bav17@gmail.com', message: 'user: '+ createUserDto.email + ' created.'};
-      this.emailService.sendEmail(email);
+            
       const result: CreateUserDto = await new this.userModel(newUser).save();
       return result;
 
