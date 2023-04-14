@@ -16,7 +16,7 @@ export class UsersService {
     
   ) {}
   
-  async create(createUserDto: CreateUserDto) {
+  async create(createUserDto: CreateUserDto):Promise<CreateUserDto> {
     try {
       const newUser = {
         ...createUserDto,
