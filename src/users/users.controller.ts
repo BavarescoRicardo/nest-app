@@ -4,7 +4,6 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { MessageBrokerService } from '../message-broker/message-broker.service';
 import { EmailService } from '../email/email.service';
 import { CreateAvatarDto } from './dto/create-avatar.dto';
-import { CreateEmailDto } from './dto/create-email-dto';
 require('dotenv/config');
 
 @Controller('api')
@@ -17,8 +16,7 @@ export class UsersController {
 
   @Post('users')
   async create(@Body(new ValidationPipe) createUserDto: CreateUserDto) {    
-    this.emailService.sendEmail(createUserDto.email);
-
+    await this.emailService.sendEmail(createUserDto.email);
     await this.messageBrokerService.sendMessage(createUserDto.email);
     return this.usersService.create(createUserDto);
   }
@@ -28,7 +26,7 @@ export class UsersController {
     try {      
       return this.usersService.findOne(+id);
     } catch (error) {
-      throw new Error("Could not use message broker, find user");
+      throw new Error("Could not find user");
     }
   }
 
