@@ -4,9 +4,7 @@ import { User } from './entities/user.entity';
 import { Avatar } from './entities/avatar.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { UserDto } from './dto/user.dto';
 import { HttpRequestService } from '../http-request/http-request.service';
-import { CreateEmailDto } from './dto/create-email-dto';
 import { CreateAvatarDto } from './dto/create-avatar.dto';
 
 @Injectable()
@@ -45,11 +43,11 @@ export class UsersService {
     }
   }
 
-  async findAvatar(id: number) :Promise<Avatar> {
+  async findAvatar(id: number) {
     console.log('at least the id gets here.. '+id)
     console.log('so probally the app cant find the id on avatar.. '+id)
      try {
-      const avatar:Avatar = await this.avatarModel.findOne({id: id});
+      const avatar:CreateAvatarDto = await this.avatarModel.findOne({id: id});
       
       if(avatar.id > 0){
         
