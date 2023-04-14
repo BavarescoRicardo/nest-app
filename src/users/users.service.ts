@@ -46,12 +46,16 @@ export class UsersService {
   }
 
   async findAvatar(id: number) :Promise<Avatar> {
+    console.log('at least the id gets here.. '+id)
+    console.log('so probally the app cant find the id on avatar.. '+id)
      try {
-      const avatar:CreateAvatarDto = await this.avatarModel.findOne({id: id});
-      if(avatar.id > 0){        
+      const avatar:Avatar = await this.avatarModel.findOne({id: id});
+      
+      if(avatar.id > 0){
+        
         const newAvatar: CreateAvatarDto = {
-          id: avatar[0].id,
-          avatar: avatar[0].avatar,
+          id: avatar.id,
+          avatar: avatar.avatar,
         }
         return newAvatar;
       }else {
@@ -74,7 +78,7 @@ export class UsersService {
         const avatar:CreateAvatarDto = await this.avatarModel.findOne({id: id});
         if(avatar.id > 0){
           await this.avatarModel.deleteOne({id: id});      
-          return { messageResult: `The user: ${id} has been removed`};
+          return { messageResult: `The avatar for user: ${id} has been removed`};
         }else{
           throw new NotFoundException;
         }
