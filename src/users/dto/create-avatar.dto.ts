@@ -1,5 +1,8 @@
+import { IsNotEmpty } from "class-validator";
 
 export class CreateAvatarDto {
-    id: Number;
+    @IsNotEmpty()
+    id: number;
+    @IsNotEmpty()
     avatar: String;
 }

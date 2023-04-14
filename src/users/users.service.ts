@@ -28,7 +28,7 @@ export class UsersService {
       
       const email: CreateEmailDto = {email: 'ricardo.bav17@gmail.com', message: 'user: '+ createUserDto.email + ' created.'};
       this.emailService.sendEmail(email);
-      const result: UserDto = await new this.userModel(newUser).save();
+      const result: CreateUserDto = await new this.userModel(newUser).save();
       return result;
 
     } catch (error) {
@@ -48,10 +48,10 @@ export class UsersService {
     }
   }
 
-  async findAvatar(id: number) :Promise<CreateAvatarDto> {
+  async findAvatar(id: number) :Promise<Avatar> {
      try {
-      let avatar = await this.avatarModel.find({id: id});
-      if(avatar.length > 0){        
+      const avatar:CreateAvatarDto = await this.avatarModel.findOne({id: id});
+      if(avatar.id > 0){        
         const newAvatar: CreateAvatarDto = {
           id: avatar[0].id,
           avatar: avatar[0].avatar,
@@ -59,7 +59,7 @@ export class UsersService {
         return newAvatar;
       }else {
         const user = await this.httpRequest.getUserById(id);
-        const newAvatar: CreateAvatarDto = {
+        const newAvatar: Avatar = {
           id: user.id,
           avatar: user.avatar,
         }
@@ -74,8 +74,8 @@ export class UsersService {
 
   async remove(id: number) {
     try {
-        let avatar = await this.avatarModel.find({id: id});
-        if(avatar.length > 0){
+        const avatar:CreateAvatarDto = await this.avatarModel.findOne({id: id});
+        if(avatar.id > 0){
           await this.avatarModel.deleteOne({id: id});      
           return { messageResult: `The user: ${id} has been removed`};
         }else{

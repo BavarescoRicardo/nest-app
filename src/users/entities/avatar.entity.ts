@@ -6,6 +6,6 @@ export const Avatar = new mongoose.Schema({
 })
 
 export interface Avatar {
-    id: Number,
+    id: number,
     avatar: String,
   }
