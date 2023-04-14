@@ -18,7 +18,7 @@ export class UsersController {
   }
 
   @Get('user/:id')
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string): Promise<CreateUserDto> {
     try {      
       return this.usersService.findOne(+id);
     } catch (error) {

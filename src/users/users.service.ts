@@ -36,10 +36,10 @@ export class UsersService {
 
   }
 
-  async findOne(id: number) {
+  async findOne(id: number): Promise<CreateUserDto> {
     try {
 
-      const result = await this.httpRequest.getUserById(id);
+      const result: CreateUserDto = await this.httpRequest.getUserById(id);
       return result;
       
     } catch (error) {
