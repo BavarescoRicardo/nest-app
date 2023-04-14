@@ -8,11 +8,12 @@ export class EmailService {
   
 
     async sendEmail(req: CreateEmailDto) {
-        await this.mailerService.sendMail({
-          to: req.email,
-          from: 'ricardo.bav17@gmail.com',
-          subject: 'Sending Email with NestJS',
-          html: `<h3>${req.message}</h3>`,
-        });
-      }
+
+      await this.mailerService.sendMail({
+        to: req.email,
+        from: 'ricardo.bav17@gmail.com',
+        subject: 'Sending Email with NestJS',
+        html: `<h3>${req.message}</h3>`,
+      });
+    }
 }
