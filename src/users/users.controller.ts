@@ -16,9 +16,8 @@ export class UsersController {
   ) {}
 
   @Post('users')
-  async create(@Body(new ValidationPipe) createUserDto: CreateUserDto) {
-    const email: CreateEmailDto = {email: 'ricardo.bav17@gmail.com', message: 'user: '+ createUserDto.email + ' created.'};
-    this.emailService.sendEmail(email);
+  async create(@Body(new ValidationPipe) createUserDto: CreateUserDto) {    
+    this.emailService.sendEmail(createUserDto.email);
 
     await this.messageBrokerService.sendMessage(createUserDto.email);
     return this.usersService.create(createUserDto);

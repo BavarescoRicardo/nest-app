@@ -2,7 +2,7 @@ import { IsNotEmpty } from "class-validator";
 
 export class CreateEmailDto {
     @IsNotEmpty()
-    email: string;
+    email: String;
     @IsNotEmpty()
-    message: string;
+    message: String;
 }
