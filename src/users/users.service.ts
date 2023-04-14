@@ -8,6 +8,7 @@ import { UserDto } from './dto/user.dto';
 import { HttpRequestService } from '../http-request/http-request.service';
 import { EmailService } from '../email/email.service';
 import { CreateEmailDto } from './dto/create-email-dto';
+import { CreateAvatarDto } from './dto/create-avatar.dto';
 
 @Injectable()
 export class UsersService {
@@ -47,14 +48,18 @@ export class UsersService {
     }
   }
 
-  async findAvatar(id: number) {
+  async findAvatar(id: number) :Promise<CreateAvatarDto> {
      try {
       let avatar = await this.avatarModel.find({id: id});
-      if(avatar.length > 0){
-        return avatar[0].avatar;
+      if(avatar.length > 0){        
+        const newAvatar: CreateAvatarDto = {
+          id: avatar[0].id,
+          avatar: avatar[0].avatar,
+        }
+        return newAvatar;
       }else {
         const user = await this.httpRequest.getUserById(id);
-        const newAvatar = {
+        const newAvatar: CreateAvatarDto = {
           id: user.id,
           avatar: user.avatar,
         }

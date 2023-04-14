@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException, V
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { MessageBrokerService } from '../message-broker/message-broker.service';
+import { CreateAvatarDto } from './dto/create-avatar.dto';
 require('dotenv/config');
 
 @Controller('api')
@@ -36,7 +37,7 @@ export class UsersController {
   }
 
   @Get('user/:id/avatar')
-  async findAvatar(@Param('id') id: string) {
+  async findAvatar(@Param('id') id: string): Promise<CreateAvatarDto> {
     try {
       return await this.usersService.findAvatar(+id);
     } catch (error) {
