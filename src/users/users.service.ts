@@ -43,23 +43,21 @@ export class UsersService {
     }
   }
 
-  async findAvatar(id: number) {
-    console.log('at least the id gets here.. '+id)
-    console.log('so probally the app cant find the id on avatar.. '+id)
+  async findAvatar(id: number): Promise<CreateAvatarDto> {
      try {
-      const avatar:CreateAvatarDto = await this.avatarModel.findOne({id: id});
+      const avatar = await this.avatarModel.findOne({id: id});
       
-      if(avatar.id > 0){
+      if(avatar){
         
         const newAvatar: CreateAvatarDto = {
           id: avatar.id,
           avatar: avatar.avatar,
         }
         return newAvatar;
-      }else {
-        const user = await this.httpRequest.getUserById(id);
-        const newAvatar: Avatar = {
-          id: user.id,
+       }else {  
+        const user:User = await this.httpRequest.getUserById(id);
+        const newAvatar: CreateAvatarDto = {
+          id: id,
           avatar: user.avatar,
         }
         
