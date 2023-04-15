@@ -9,27 +9,38 @@ import { EmailModule } from '../email/email.module';
 describe('UsersService', () => {
   let service: UsersService;
   const user = {
-    "email": "george.bluth@reqres.in",
-    "first_name": "George",
-    "last_name": "Bluth",
-    "avatar": "https://reqres.in/img/faces/1-image.jpg"
-  }
+    email: 'george.bluth@reqres.in',
+    first_name: 'George',
+    last_name: 'Bluth',
+    avatar: 'https://reqres.in/img/faces/1-image.jpg'
+  };
 
-  const mockEmail = {}  
+  const mockEmail = {};
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
-        MongooseModule.forFeature([{
-        name: 'User', schema: User,
-      }]),
-      MongooseModule.forFeature([{
-        name: 'Avatar', schema: Avatar,
-      }]),
-      MongooseModule.forRoot('mongodb://localhost/apinest'), HttpRequestModule, EmailModule],
-      providers: [UsersService],
-    }).overrideProvider(EmailModule).useValue(mockEmail)
-    .compile();
+        MongooseModule.forFeature([
+          {
+            name: 'User',
+            schema: User
+          }
+        ]),
+        MongooseModule.forFeature([
+          {
+            name: 'Avatar',
+            schema: Avatar
+          }
+        ]),
+        MongooseModule.forRoot('mongodb://localhost/apinest'),
+        HttpRequestModule,
+        EmailModule
+      ],
+      providers: [UsersService]
+    })
+      .overrideProvider(EmailModule)
+      .useValue(mockEmail)
+      .compile();
 
     service = module.get<UsersService>(UsersService);
   });
@@ -38,11 +49,11 @@ describe('UsersService', () => {
     expect(service).toBeDefined();
   });
 
-  it('should get an user', async () =>{
+  it('should get an user', async () => {
     expect(await service.findOne(1)).toBeDefined;
-  })
+  });
 
-  it('should create and return an user', async () =>{
+  it('should create and return an user', async () => {
     expect(await service.create(user)).toBe({
       __v: 0,
       _id: expect.any(String),
@@ -52,6 +63,5 @@ describe('UsersService', () => {
       last_name: user.last_name,
       avatar: user.avatar
     });
-  })
-  
+  });
 });

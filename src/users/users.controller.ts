@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException, ValidationPipe, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  NotFoundException,
+  ValidationPipe
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { MessageBrokerService } from '../message-broker/message-broker.service';
@@ -9,13 +18,13 @@ require('dotenv/config');
 @Controller('api')
 export class UsersController {
   constructor(
-    private readonly usersService: UsersService,    
+    private readonly usersService: UsersService,
     private readonly messageBrokerService: MessageBrokerService,
-    private readonly emailService: EmailService,
+    private readonly emailService: EmailService
   ) {}
 
   @Post('users')
-  async create(@Body(new ValidationPipe) createUserDto: CreateUserDto) {    
+  async create(@Body(new ValidationPipe()) createUserDto: CreateUserDto) {
     await this.emailService.sendEmail(createUserDto.email);
     await this.messageBrokerService.sendMessage(createUserDto.email);
     return this.usersService.create(createUserDto);
@@ -23,10 +32,10 @@ export class UsersController {
 
   @Get('user/:id')
   async findOne(@Param('id') id: string): Promise<CreateUserDto> {
-    try {      
+    try {
       return this.usersService.findOne(+id);
     } catch (error) {
-      throw new Error("Could not find user");
+      throw new Error('Could not find user');
     }
   }
 

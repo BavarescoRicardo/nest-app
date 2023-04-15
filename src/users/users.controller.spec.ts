@@ -8,15 +8,15 @@ describe('UsersController', () => {
   let controller: UsersController;
 
   beforeEach(async () => {
-    const mockUserService = {}
+    const mockUserService = {};
     const module: TestingModule = await Test.createTestingModule({
-      imports: [
-        EmailModule, MessageBrokerModule],
+      imports: [EmailModule, MessageBrokerModule],
       controllers: [UsersController],
-      providers: [UsersService],
+      providers: [UsersService]
     })
-    .overrideProvider(UsersService).useValue(mockUserService)
-    .compile();
+      .overrideProvider(UsersService)
+      .useValue(mockUserService)
+      .compile();
     controller = module.get<UsersController>(UsersController);
   });
 

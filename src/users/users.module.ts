@@ -9,16 +9,24 @@ import { HttpRequestModule } from 'src/http-request/http-request.module';
 import { Avatar } from './entities/avatar.entity';
 
 @Module({
-  imports: [      
-    MongooseModule.forFeature([{
-      name: 'User', schema: User,
-    }]),
-    MongooseModule.forFeature([{
-      name: 'Avatar', schema: Avatar,
-    }]),
+  imports: [
+    MongooseModule.forFeature([
+      {
+        name: 'User',
+        schema: User
+      }
+    ]),
+    MongooseModule.forFeature([
+      {
+        name: 'Avatar',
+        schema: Avatar
+      }
+    ]),
     MongooseModule.forRoot('mongodb://localhost/appnest'),
-    EmailModule, MessageBrokerModule, HttpRequestModule
-],
+    EmailModule,
+    MessageBrokerModule,
+    HttpRequestModule
+  ],
   controllers: [UsersController],
   providers: [UsersService],
   exports: [UsersService]

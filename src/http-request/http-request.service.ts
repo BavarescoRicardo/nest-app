@@ -4,16 +4,17 @@ import { map } from 'rxjs';
 
 @Injectable()
 export class HttpRequestService {
-    constructor(private readonly httpService: HttpService) {}
+  constructor(private readonly httpService: HttpService) {}
 
-    async getUserById(id: number): Promise<any> {
-            return (await this.httpService.axiosRef.get(`https://reqres.in/api/users/${id}`)).data.data;
-    }
-    
-    async getUserAvatarById(id: number): Promise<any> {
-      const user = await this.httpService.get(`https://reqres.in/api/users/${id}`).pipe(
-            map(response => response.data.data.avatar)
-        );
-      return user;
-    }
+  async getUserById(id: number): Promise<any> {
+    return (
+      await this.httpService.axiosRef.get(`https://reqres.in/api/users/${id}`)
+    ).data.data;
+  }
+  async getUserAvatarById(id: number): Promise<any> {
+    const user = await this.httpService
+      .get(`https://reqres.in/api/users/${id}`)
+      .pipe(map((response) => response.data.data.avatar));
+    return user;
+  }
 }
