@@ -11,7 +11,8 @@ export class UsersService {
   constructor(
     @InjectModel('User') private readonly userModel: Model<User>,
     @InjectModel('Avatar') private readonly avatarModel: Model<Avatar>,
-    private readonly httpRequest: HttpRequestService) {}
+    private readonly httpRequest: HttpRequestService
+  ) {}
   async create(createUserDto: CreateUserDto): Promise<CreateUserDto> {
     try {
       const newUser = {
@@ -41,14 +42,14 @@ export class UsersService {
       if (avatar) {
         const newAvatar: CreateAvatarDto = {
           id: avatar.id,
-          avatar: avatar.avatar,
+          avatar: avatar.avatar
         };
         return newAvatar;
       } else {
         const user: User = await this.httpRequest.getUserById(id);
         const newAvatar: CreateAvatarDto = {
           id: id,
-          avatar: user.avatar,
+          avatar: user.avatar
         };
 
         return new this.avatarModel(newAvatar).save();
@@ -61,7 +62,7 @@ export class UsersService {
   async remove(id: number) {
     try {
       const avatar: CreateAvatarDto = await this.avatarModel.findOne({
-        id: id,
+        id: id
       });
       if (avatar.id > 0) {
         await this.avatarModel.deleteOne({ id: id });
